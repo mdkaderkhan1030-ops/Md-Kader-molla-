@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user credits, subscription tier, and usage data.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email" },
+        "credits": { "type": "integer", "description": "Remaining AI generation credits" },
+        "tier": { "type": "string", "enum": ["free", "pro", "ultra"], "description": "Subscription tier" },
+        "subscriptionStatus": { "type": "string", "enum": ["active", "none", "past_due"] },
+        "lastCreditReset": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "credits", "tier"]
+    },
+    "Transaction": {
+      "title": "Credit Transaction",
+      "description": "Logs credit usage or purchases.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "amount": { "type": "integer" },
+        "type": { "type": "string", "enum": ["usage", "purchase", "bonus"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "tool": { "type": "string", "description": "Which tool was used" }
+      },
+      "required": ["userId", "amount", "type", "timestamp"]
+    },
+    "Project": {
+      "title": "User Project",
+      "description": "Stores generated AI content like videos, images, and subtitles.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "videoUrl": { "type": "string" },
+        "audioUrl": { "type": "string" },
+        "subtitles": { "type": "array" }
+      },
+      "required": ["userId", "title", "type"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Log of all credit-related activities"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "User generated projects"
+    }
+  }
+}

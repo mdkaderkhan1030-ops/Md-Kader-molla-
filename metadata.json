@@ -1,0 +1,8 @@
+{
+  "name": "VividAI",
+  "description": "Powerful AI-driven video creation suite featuring text-to-video, auto-subtitles, story animation, and AI avatars.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
